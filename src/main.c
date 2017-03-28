@@ -1,7 +1,8 @@
 #include "main.h"
+#include "libft.h"
 
 int		main()
 {
-	write(1, HELLOWORLD, 12);
+	ft_putendl(HELLOWORLD);
 	return (0);
 }

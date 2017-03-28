@@ -4,6 +4,6 @@
 # include <stdio.h>
 # include <unistd.h>
 
-# define HELLOWORLD "Hello World\n"
+# define HELLOWORLD "Hello World"
 
 #endif
