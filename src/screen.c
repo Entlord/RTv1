@@ -7,9 +7,11 @@ static t_sdl_data	g_sdl_data = {
 
 int    				init_window(int width, int height)
 {
-	int			fail;
+	int				fail;
 
-	fail = SDL_Init(SDL_INIT_VIDEO) || SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_SHOWN, &g_sdl_data.window, &g_sdl_data.renderer);
+	fail = SDL_Init(SDL_INIT_VIDEO) || SDL_CreateWindowAndRenderer(
+	width, height,
+	SDL_WINDOW_SHOWN, &g_sdl_data.window, &g_sdl_data.renderer);
 	return (fail != 0);
 }
 
@@ -25,26 +27,27 @@ int    				free_resources(void)
 
 int    				clear_image(void)
 {
-	int		fail;
+	int				fail;
 
-	fail = SDL_SetRenderDrawColor(g_sdl_data.renderer, 255, 255, 255, 255)
+	fail = SDL_SetRenderDrawColor(g_sdl_data.renderer, 0, 0, 0, 255)
 	|| SDL_RenderClear(g_sdl_data.renderer)
 	|| copy_image_to_window();
 	return (fail != 0);
 }
 
-int					draw_pixel(int x, int y, int r, int g, int b)
+int					draw_pixel(int x, int y, t_color *color)
 {
-	int		fail;
+	int				fail;
 
-	fail = SDL_SetRenderDrawColor(g_sdl_data.renderer, r, g, b, 255)
+	fail = SDL_SetRenderDrawColor(g_sdl_data.renderer,
+	color->r, color->g, color->b, 255)
 	|| SDL_RenderDrawPoint(g_sdl_data.renderer, x, y);
 	return (fail != 0);
 }
 
 int    				copy_image_to_window(void)
 {
-	int		fail;
+	int				fail;
 
 	fail = g_sdl_data.renderer == NULL;
 	if (!fail)
