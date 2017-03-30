@@ -14,7 +14,9 @@ SOURCES = \
 	src/main.c \
 	src/new_object.c \
 	src/new_store.c \
-	src/screen.c \
+	src/screen.c
+
+
 
 OBJECTS = $(patsubst src/%.c, objects/%.o, $(SOURCES))
 
