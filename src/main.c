@@ -1,11 +1,16 @@
-#include "libft.h"
-#include "main.h"
+#include <libft.h>
+#include <struct.h>
+#include <screen.h>
 
 int		main(void)
 {
+	t_img		img;
+
+
+//
 	init_window(200, 200);
 	clear_image();
-	copy_image_to_window();
+	refresh_window();
 	SDL_Delay(500);
 	clear_image();
 	SDL_Delay(500);
