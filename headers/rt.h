@@ -14,16 +14,18 @@
 # define	NO_PARAM		"Error input: 0 param"
 # define	NO_FILE			"Error input: param no file : "
 
-# define HELLOWORLD "Hello World"
-
 t_ball				*new_ball(void);
 t_tube				*new_tube(void);
 t_cone				*new_cone(void);
 t_plan				*new_plan(void);
 t_box				*new_box(void);
 
+t_list_rt			*new_list_rt(void);
+t_list_rt			*file_check(int fd);
 //a faire
 t_object			*new_object(void);
+//ft_push map
+//
 
 
 
