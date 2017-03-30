@@ -39,13 +39,10 @@ fclean: clean
 re: fclean all
 
 sdl:
-	-@if [ `uname -s` = "Linux" ]; then \
-		sudo apt-get install libsdl2-2.0-0 libsdl2-dev -y;\
-	else \
-		brew install sdl2 sdl2-config\
-	; fi
+	-@[ `uname -s` = "Linux" ] && which sdl2-config > /dev/null || sudo apt-get install libsdl2-2.0-0 libsdl2-dev --quiet -y
+	-@[ `uname -s` = "Linux" ] || which sdl2-config > /dev/null || brew install sdl2 sdl2-config
 
 libft:
-	-cd libft && make
+	-cd libft && make -j && make
 
 .PHONY: all clean fclean re sdl libft
