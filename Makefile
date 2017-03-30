@@ -11,7 +11,8 @@ UNAME_S := $(shell uname -s)
 
 SOURCES = \
 	src/main.c \
-	src/screen.c
+	src/new_object.c \
+	src/screen.c \
 
 OBJECTS = $(patsubst src/%.c, objects/%.o, $(SOURCES))
 
