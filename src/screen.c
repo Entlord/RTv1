@@ -41,6 +41,8 @@ int    				clear_image(void)
 {
 	int				fail;
 
+	if (g_sdl_data.renderer == NULL || g_sdl_data.renderer == NULL)
+		return (0);
 	fail = SDL_SetRenderDrawColor(g_sdl_data.renderer, 0, 0, 0, 255)
 	|| SDL_RenderClear(g_sdl_data.renderer)
 	|| copy_image_to_window();
@@ -51,6 +53,8 @@ int					draw_pixel(int x, int y, t_color *color)
 {
 	int				fail;
 
+	if (g_sdl_data.renderer == NULL)
+		return (0);
 	fail = SDL_SetRenderDrawColor(g_sdl_data.renderer,
 	color->r, color->g, color->b, 255)
 	|| SDL_RenderDrawPoint(g_sdl_data.renderer, x, y);
@@ -59,10 +63,9 @@ int					draw_pixel(int x, int y, t_color *color)
 
 int    				copy_image_to_window(void)
 {
-	int				fail;
-
-	fail = g_sdl_data.renderer == NULL;
-	if (!fail)
+	if (g_sdl_data.renderer != NULL)
 		SDL_RenderPresent(g_sdl_data.renderer);
-	return (fail != 0);
+	else
+		return (0);
+	return (1);
 }
