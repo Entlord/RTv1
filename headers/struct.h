@@ -1,10 +1,10 @@
 #ifndef __STRUCT_H__
 # define __STRUCT_H__
 
-# define	PLAN	1
-# define	TUBE	2
-# define	BALL	3
-# define	CONE 	4
+# define	OBJ_PLAN	1
+# define	OBJ_TUBE	2
+# define	OBJ_BALL	3
+# define	OBJ_CONE 	4
 
 typedef struct		s_coor
 {
@@ -113,6 +113,7 @@ typedef struct	s_light
 
 typedef struct		s_object
 {
+	int				id;
 	int				type;
 	void			*object;
 	t_box			collide_box;
