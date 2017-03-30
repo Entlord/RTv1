@@ -95,6 +95,13 @@ typedef struct	s_light
 **images and map
 */
 
+typedef struct		s_object
+{
+	int				type;
+	void			*object;
+	struct s_object	*next;
+}					t_object;
+
 typedef struct	s_map
 {
 	t_plan		*plan;
