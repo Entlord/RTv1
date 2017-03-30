@@ -75,6 +75,18 @@ typedef struct	s_plan
 	char		refraction;
 }				t_plan;
 
+typedef	struct	s_box
+{
+	t_vector	point;
+	t_color		color;
+	int			width;
+	int			height;
+	int			depth;
+	char		shiny;
+	char		transparency;
+	char		refraction;
+}				t_box;
+
 /*
 **cam and light
 */
@@ -98,19 +110,18 @@ typedef struct	s_light
 **images and map
 */
 
+
 typedef struct		s_object
 {
 	int				type;
 	void			*object;
+	t_box			collide_box;
 	struct s_object	*next;
 }					t_object;
 
 typedef struct	s_map
 {
-	t_plan		*plan;
-	t_ball		*ball;
-	t_tube		*tube;
-	t_cone		*cone;
+	t_object	*object;
 	t_cam		*cam;
 	t_light		*light;
 }				t_map;
