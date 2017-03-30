@@ -17,7 +17,6 @@ SOURCES = \
 	src/screen.c
 
 
-
 OBJECTS = $(patsubst src/%.c, objects/%.o, $(SOURCES))
 
 #### Regles
@@ -48,6 +47,6 @@ sdl:
 	-@[ `uname -s` = "Linux" ] || which sdl2-config > /dev/null || brew install sdl2 sdl2-config
 
 libft:
-	-cd libft && make -j && make
+	-cd libft && make
 
 .PHONY: all clean fclean re sdl libft
