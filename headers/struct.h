@@ -1,7 +1,10 @@
 #ifndef __STRUCT_H__
 # define __STRUCT_H__
 
-# define SPOT		1
+# define	PLAN	1
+# define	TUBE	2
+# define	BALL	3
+# define	CONE 	4
 
 typedef struct		s_coor
 {
