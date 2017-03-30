@@ -119,18 +119,24 @@ typedef struct		s_object
 	struct s_object	*next;
 }					t_object;
 
-typedef struct	s_map
+typedef struct		s_map
 {
-	t_object	*object;
-	t_cam		*cam;
-	t_light		*light;
-}				t_map;
+	t_object		*object;
+	t_cam			*cam;
+	t_light			*light;
+}					t_map;
 
-typedef struct	s_img
+typedef struct		s_img
+{	
+	int				height;
+	int				width;
+	t_color			**pixel;
+}					t_img;
+
+typedef struct		s_listrt
 {
-	int			height;
-	int			width;
-	t_color		**pixel;
-}				t_img;
+	void			*elem;
+	struct s_listrt	*next;
+}					t_list_rt;
 
 #endif

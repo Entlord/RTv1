@@ -1,30 +1,15 @@
 #include <libft.h>
 #include <struct.h>
+#include <rt.h>
+
 
 /*
 	Gestion input
+		fichier valide?
 	Lexeur 
 	parseur
 	Appel partie matthieu
 */
-
-int		input(int argc, char **argv)
-{
-	if (argc == 1)
-	{
-
-	}
-	else
-}
-
-int		main(int argc, char **argv)
-{
-	t_img		img;
-	t_map		map;
-
-
-	if (argc == 1)
-
 
 /*
 	init_window(200, 200);
@@ -36,5 +21,57 @@ int		main(int argc, char **argv)
 	free_resources();
 */
 
+static void		st_save_map(int fd, t_list_rt **list_map)
+{
+	t_list_rt	*map;
+
+	(void)list_map;
+
+	map = file_check(fd);
+	if (close(fd) == -1)
+		perror(strerror(errno));
+	if (map)
+	{
+		//ft_push_map(file_check(fd));
+	}
+}
+
+static void		st_check_list_param(int argc, char **argv, 
+									t_list_rt **list_map)//, t_list_rt **img)
+{
+		int		i;
+		int		fd;
+
+		i = 0;
+		while (i < argc)
+		{
+			++i;
+			fd = open(argv[i], O_RDONLY);
+			if (fd == -1)
+				perror(strerror(errno));
+			else
+			{
+				st_save_map(fd, list_map);
+				//calcul image
+			}
+		}
+}
+
+int				main(int argc, char **argv)
+{
+	t_list_rt	*list_map;
+//	t_list_rt	*list_img;
+
+
+	if (argc == 1)
+		ft_putstr(NO_PARAM);
+	else
+	{
+		list_map = NULL;
+//		list_img = NULL;
+		st_check_list_param(argc, argv, &list_map);
+		//free map;
+		//free img;
+	}
 	return (0);
 }
