@@ -21,7 +21,9 @@ int					init_window(int width, int height);
 int					free_resources(void);
 int					clear_image(void);
 int					draw_pixel(int x, int y, t_color *color);
-int					copy_image_to_window(void);
+int					draw_img(t_img *img);
+int					refresh_screen(void);
 int					set_color(int r, int g, int b);
+
 
 #endif
