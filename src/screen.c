@@ -5,6 +5,18 @@ static t_sdl_data	g_sdl_data = {
 	NULL
 };
 
+
+int					set_color(int r, int g, int b)
+{
+	int				fail;
+
+	if (g_sdl_data.renderer == NULL)
+		return (0);
+	fail = SDL_SetRenderDrawColor(g_sdl_data.renderer, r, g, b, 255);
+	return (fail != 0);
+}
+
+
 int    				init_window(int width, int height)
 {
 	int				fail;

@@ -22,5 +22,6 @@ int					free_resources(void);
 int					clear_image(void);
 int					draw_pixel(int x, int y, t_color *color);
 int					copy_image_to_window(void);
+int					set_color(int r, int g, int b);
 
 #endif
