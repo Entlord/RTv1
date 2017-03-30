@@ -21,6 +21,8 @@ t_tube				*new_tube(void);
 t_cone				*new_cone(void);
 t_plan				*new_plan(void);
 t_box				*new_box(void);
+
+//a faire
 t_object			*new_object(void);
 
 
