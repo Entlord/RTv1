@@ -11,6 +11,7 @@ UNAME_S := $(shell uname -s)
 
 SOURCES = \
 	src/file_check.c \
+	src/file_read.c \
 	src/main.c \
 	src/new_object.c \
 	src/new_store.c \

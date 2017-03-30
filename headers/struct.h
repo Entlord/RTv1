@@ -1,10 +1,11 @@
 #ifndef __STRUCT_H__
 # define __STRUCT_H__
 
-# define	PLAN	1
-# define	TUBE	2
-# define	BALL	3
-# define	CONE 	4
+# define	PLAN			1
+# define	TUBE			2
+# define	BALL			3
+# define	CONE 			4
+# define	BUFFER_SIZE		4096
 
 typedef struct		s_coor
 {
@@ -138,5 +139,15 @@ typedef struct		s_listrt
 	void			*elem;
 	struct s_listrt	*next;
 }					t_list_rt;
+
+/*
+**buffer de fichier
+*/
+
+typedef struct		s_buff
+{
+	char			buf[BUFFER_SIZE];
+	struct s_buff	*next;
+}					t_buff;
 
 #endif
