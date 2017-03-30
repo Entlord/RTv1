@@ -1,8 +1,12 @@
-#include "libft.h"
-#include "main.h"
+#include <libft.h>
+#include <struct.h>
 
 int		main(void)
 {
+	t_img		img;
+
+
+//
 	init_window(200, 200);
 	clear_image();
 	copy_image_to_window();
