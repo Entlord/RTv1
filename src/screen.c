@@ -93,6 +93,7 @@ int					draw_img(t_img *img)
 void				handle_events(void)
 {
 	SDL_Event	event;
+
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_QUIT)
