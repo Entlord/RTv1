@@ -1,40 +1,5 @@
 #include <rt.h>
 
-int    				init_window(int width, int height)
-{
-	int				fail;
-
-	fail = SDL_Init(SDL_INIT_VIDEO) || SDL_CreateWindowAndRenderer(
-	width, height,
-	SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE,
-	&get_sdl_data()->window, &get_sdl_data()->renderer);
-	get_sdl_data()->width = width;
-	get_sdl_data()->height = height;
-	return (fail != 0);
-}
-
-int    				free_resources(void)
-{
-	if (get_sdl_data()->window != NULL)
-		SDL_DestroyWindow(get_sdl_data()->window);
-	if (get_sdl_data()->renderer != NULL)
-		SDL_DestroyRenderer(get_sdl_data()->renderer);
-	SDL_Quit();
-	return (1);
-}
-
-int    				clear_image(void)
-{
-	int				fail;
-
-	if (get_sdl_data()->renderer == NULL || get_sdl_data()->renderer == NULL)
-		return (0);
-	fail = SDL_SetRenderDrawColor(get_sdl_data()->renderer, 0, 0, 0, 255)
-	|| SDL_RenderClear(get_sdl_data()->renderer)
-	|| refresh_window();
-	return (fail != 0);
-}
-
 int					draw_pixel(int x, int y, t_color *color)
 {
 	int				fail;
@@ -47,34 +12,40 @@ int					draw_pixel(int x, int y, t_color *color)
 	return (fail != 0);
 }
 
-int    				refresh_window(void)
+t_color				get_average_pixel(t_img *img, int x, int y)
 {
-	if (get_sdl_data()->renderer != NULL)
-		SDL_RenderPresent(get_sdl_data()->renderer);
-	else
-		return (0);
-	return (1);
+	t_color	average;
+	double	scale_x;
+	double	scale_y;
+
+	scale_x = (double)img->width / (double)get_sdl_data()->width;
+	scale_y = (double)img->height / (double)get_sdl_data()->height;
+	average.r = ((img->pixel[(int)(x*scale_x)][(int)(y*scale_y)].r)
+	+ (img->pixel[(int)((x+1)*scale_x)][(int)((y+1)*scale_y)].r)) / 2;
+	average.g = ((img->pixel[(int)(x*scale_x)][(int)(y*scale_y)].g)
+	+ (img->pixel[(int)((x+1)*scale_x)][(int)((y+1)*scale_y)].g)) / 2;
+	average.b = ((img->pixel[(int)(x*scale_x)][(int)(y*scale_y)].b)
+	+ (img->pixel[(int)((x+1)*scale_x)][(int)((y+1)*scale_y)].b)) / 2;
+	return (average);
 }
 
 int					draw_img(t_img *img)
 {
 	int		x;
 	int		y;
-	double	scale_x;
-	double	scale_y;
+	t_color	average;
 
 	SDL_GL_GetDrawableSize(get_sdl_data()->window,
 	&get_sdl_data()->width,
 	&get_sdl_data()->height);
-	scale_x = (double)img->width / (double)get_sdl_data()->width;
-	scale_y = (double)img->height / (double)get_sdl_data()->height;
 	y = 0;
-	while (y < get_sdl_data()->height)
+	while (y + 1 < get_sdl_data()->height)
 	{
 		x = 0;
-		while (x < get_sdl_data()->width)
+		while (x + 1 < get_sdl_data()->width)
 		{
-			draw_pixel(x, y, &img->pixel[(int)(x*scale_x)][(int)(y*scale_y)]);
+			average = get_average_pixel(img, x, y);
+			draw_pixel(x, y, &average);
 			x++;
 		}
 		y++;

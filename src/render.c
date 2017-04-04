@@ -30,7 +30,7 @@ void	render_pixel(t_map *map, t_img *image, int x, int y)
 		image->pixel[x][y] = sky;
 	else
 		// draw_pixel(x, y, &sphere.color);
-		image->pixel[x][y].r = 255;
+		image->pixel[x][y] = sphere.color;
 }
 
 void	render_map(t_map *map, t_img *image)

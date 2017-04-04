@@ -20,6 +20,7 @@ SOURCES = \
 	src/new_store.c \
 	src/render.c \
 	src/screen.c \
+	src/sdl.c \
 	src/sdl_singleton.c \
 	src/sphere.c \
 	src/utils.c \
