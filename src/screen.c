@@ -83,7 +83,22 @@ int					draw_img(t_img *img)
 		{
 			if (!draw_pixel(x, y, &img->pixel[x][y]))
 				return (0);
+			x++;
 		}
+		y++;
 	}
 	return (1);
+}
+
+void				handle_events(void)
+{
+	SDL_Event	event;
+
+	while (SDL_PollEvent(&event))
+	{
+		if (event.type == SDL_QUIT)
+		{
+			exit(0);
+		}
+	}
 }
