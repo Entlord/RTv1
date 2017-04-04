@@ -10,14 +10,16 @@ UNAME_S := $(shell uname -s)
 #### Fichiers sources
 
 SOURCES = \
-	src/file_check.c \
-	src/file_read.c \
 	src/main.c \
 	src/new_object.c \
 	src/new_store.c \
 	src/collide_box.c \
 	src/render.c \
-	src/screen.c
+	src/screen.c \
+	src/utils.c \
+	src/camera.c \
+	src/vector.c \
+	src/sphere.c
 
 OBJECTS = $(patsubst src/%.c, objects/%.o, $(SOURCES))
 

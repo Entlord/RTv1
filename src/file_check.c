@@ -3,6 +3,7 @@
 t_list_rt		*file_check(int fd)
 {
 	t_list_rt	*map;
+	(void)fd;
 
 	map = new_list_rt();
 	if (!map)

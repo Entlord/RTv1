@@ -10,6 +10,9 @@
 # include <string.h>
 # include <errno.h>
 # include <struct.h>
+# include <vector.h>
+# include <math.h>
+# include <screen.h>
 
 # define	NO_PARAM		"Error input: 0 param"
 
@@ -24,8 +27,9 @@
 // Render
 void				render_map(t_map *map, t_img *image);
 t_object			*fill_collision_box(t_object *object);
-t_vector			get_camera_vector(t_cam *camera, int x, int y);
-t_object			*is_collide(t_vector vector, t_object *object);
+t_coor				get_camera_vector(const t_cam *camera, int x, int y);
+// t_object			*is_collide(t_coor vector, t_object *object);
+float	get_intersect_sphere(t_coor ray_pos, t_vector ray, t_ball sphere);
 
 // Utils
 
@@ -34,8 +38,8 @@ t_tube				*new_tube(void);
 t_cone				*new_cone(void);
 t_plan				*new_plan(void);
 t_box				*new_box(void);
-t_color				*set_pixel(t_color *pixel, int r, int g, int b);
-t_color				*cpy_pixel(t_color src, t_color *dest);
+t_color				get_color(int r, int g, int b);
+t_color				*cpy_pixel(t_color *src, t_color *dest);
 
 t_list_rt			*new_list_rt(void);
 t_list_rt			*file_check(int fd);
