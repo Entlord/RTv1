@@ -11,12 +11,13 @@ UNAME_S := $(shell uname -s)
 
 SOURCES = \
 	src/file_check.c \
+	src/file_read.c \
 	src/main.c \
 	src/new_object.c \
 	src/new_store.c \
 	src/collide_box.c \
 	src/render.c \
-	src/screen.c \
+	src/screen.c
 
 OBJECTS = $(patsubst src/%.c, objects/%.o, $(SOURCES))
 
@@ -44,11 +45,8 @@ fclean: clean
 re: fclean all
 
 sdl:
-	-@if [ `uname -s` = "Linux" ]; then \
-		sudo apt-get install libsdl2-2.0-0 libsdl2-dev -y;\
-	else \
-		brew install sdl2 sdl2-config\
-	; fi
+	-@[ `uname -s` = "Linux" ] && which sdl2-config > /dev/null || sudo apt-get install libsdl2-2.0-0 libsdl2-dev --quiet -y
+	-@[ `uname -s` = "Linux" ] || which sdl2-config > /dev/null || brew install sdl2 sdl2-config
 
 libft:
 	-cd libft && make

@@ -1,0 +1,32 @@
+#les symboles utilisés sont {} pour objet contenant d'autres données
+#guillemet signifie l'ouverture d'une chaine de caractère associé à l'élément
+#les décimal sont faites par des .
+#pour rgb, les valeurs doivent être faites en 0 et 255, sans décimal
+
+rt {
+	map_name  "ma first scene";
+
+	sphere {
+		position	0 0 0 # forcement 3 valeurs pas plus pas moins.
+		radius		1 #entier uniquement
+		rgb			0 0 255
+
+	}
+
+	cylinder {
+		position	1 1 1
+	}
+
+	cone {
+		position	2 2 2
+	}
+
+	plan {
+		position	4 4 4
+	}
+
+	box {
+		position	3 3 3
+	}
+
+}

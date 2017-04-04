@@ -4,9 +4,13 @@ t_list_rt		*file_check(int fd)
 {
 	t_list_rt	*map;
 
-	(void)fd;
-	if (!(map = new_list_rt()))
+	map = new_list_rt();
+	if (!map)
 		perror(strerror(errno));
+	else
+	{
+		
+	}
 	/*
 		var : sauvegarde struct tmp pour 
 
