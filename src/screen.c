@@ -2,7 +2,9 @@
 
 static t_sdl_data	g_sdl_data = {
 	NULL,
-	NULL
+	NULL,
+	0,
+	0
 };
 
 
@@ -24,6 +26,8 @@ int    				init_window(int width, int height)
 	fail = SDL_Init(SDL_INIT_VIDEO) || SDL_CreateWindowAndRenderer(
 	width, height,
 	SDL_WINDOW_SHOWN, &g_sdl_data.window, &g_sdl_data.renderer);
+	g_sdl_data.width = width;
+	g_sdl_data.height = height;
 	return (fail != 0);
 }
 
@@ -74,14 +78,18 @@ int					draw_img(t_img *img)
 {
 	int		x;
 	int		y;
+	int		scale_x;
+	int		scale_y;
 
+	scale_x = img->width / g_sdl_data.width;
+	scale_y = img->height / g_sdl_data.height;
 	y = 0;
-	while (y < img->height)
+	while (y < g_sdl_data.height)
 	{
 		x = 0;
-		while (x < img->width)
+		while (x < g_sdl_data.width)
 		{
-			if (!draw_pixel(x, y, &img->pixel[x][y]))
+			if (!draw_pixel(x, y, &img->pixel[x*scale_x][y*scale_y]))
 				return (0);
 			x++;
 		}

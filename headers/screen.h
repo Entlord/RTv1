@@ -9,6 +9,8 @@ typedef struct		s_sdl_data
 {
 	SDL_Window		*window;
 	SDL_Renderer	*renderer;
+	int				width;
+	int				height;
 }					t_sdl_data;
 
 int					init_window(int width, int height);
