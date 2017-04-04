@@ -3,34 +3,72 @@
 #define SKYBOX_G	99
 #define SKYBOX_B	99
 
+const t_dict_obj dict[] =
+{
+	{SPHERE, get_intersect_sphere},
+    { 0x0, NULL }
+};
+
 void	render_pixel(t_map *map, t_img *image, int x, int y)
 {
-	(void)map;
-	t_color	sky;
-	float	intersect;
+	t_color		sky;
+	t_object	*obj;
+	t_object	*nearest;
+	float		intersect_tmp;
+	float		intersect_min;
+	int			i;
 
+	nearest = NULL;
 	sky = get_color(SKYBOX_R, SKYBOX_G, SKYBOX_B);
 	t_vector	cam_vector;
-	t_ball	sphere;
-
-	sphere.position.x = 0;
-	sphere.position.y = 3;
-	sphere.position.z = 0;
-	sphere.radius = 1;
-	sphere.color = get_color(255, 0, 0);
 
 	cam_vector = get_camera_vector(map->cam, x, y);
+	(void)sky;
+	(void)image;
 
-	intersect = get_intersect_sphere(map->cam->position, cam_vector, sphere);
-	// printf("%f\n", intersect);
+	intersect_min = -1;
+	obj = map->object;
+	while(obj)
+	{
+		i = 0;
+		while (dict[i].type != 0 && dict[i].type != obj->type)
+			i++;
 
-	cpy_pixel(&sky, &(image->pixel[x][y]));
-	if (intersect == -1)
+		if (dict[i].type != 0)
+		{
+
+			intersect_tmp = dict[i].f(map->cam->position, cam_vector, obj->object);
+			if (intersect_tmp == -1)
+				intersect_tmp = intersect_tmp;
+			else if (intersect_min == -1 || intersect_tmp < intersect_min)
+			{
+				intersect_min = intersect_tmp;
+				nearest = obj;
+			}
+		}
+
+		obj = obj->next;
+	}
+
+	if (nearest == NULL)
 		// draw_pixel(x, y, &sky);
-		image->pixel[x][y] = sky;
+		cpy_pixel(&sky, &image->pixel[x][y]);
 	else
-		// draw_pixel(x, y, &sphere.color);
-		image->pixel[x][y] = sphere.color;
+	{
+		t_ball *n;
+		n = nearest->object;
+		// draw_pixel(x, y, &n->color);
+		cpy_pixel(&n->color, &image->pixel[x][y]);
+	}
+	
+	// intersect = get_intersect_sphere(map->cam->position, cam_vector, (t_ball*)(map->object->next->object));
+	// // printf("%f\n", intersect);
+
+	// cpy_pixel(&sky, &(image->pixel[x][y]));
+	// if (intersect == -1)
+	// 	draw_pixel(x, y, &sky);
+	// else
+	// 	draw_pixel(x, y, &sphere.color);
 }
 
 void	render_map(t_map *map, t_img *image)
@@ -46,6 +84,7 @@ void	render_map(t_map *map, t_img *image)
 		while (x < image->width)
 		{
 			render_pixel(map, image, x, y);
+			assert(image->pixel[x][y].r ||image->pixel[x][y].g ||image->pixel[x][y].b);
 			x++;
 		}
 		y++;

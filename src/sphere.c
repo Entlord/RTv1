@@ -2,7 +2,7 @@
 
 /*
  *
- *	get_minimal_distance_point : Renvoi la distance minimale entre une droite et un point
+ *	get_nearest_point : Renvoi le vecteur entre le point donné et le point le plus proche de la droite
  *	pos : Position de la droite
  *	ray : Vecteur unitaire de la droite
  *	point : point
@@ -21,13 +21,15 @@ static t_vector get_nearest_point(t_vector ray, t_coor point)
 	return nearest;
 }
 
-float	get_intersect_sphere(t_coor ray_pos, t_vector ray, t_ball sphere)
+float	get_intersect_sphere(t_coor ray_pos, t_vector ray, void *obj)
 {
 	t_vector	oriented_sphere_ray;
+	t_ball		sphere;
 	float		oriented_sphere_ray_length;
 	float		intersect;
 	float		delta;
 	
+	sphere = *(t_ball*)obj;
 	sphere.position.x -= ray_pos.x;
 	sphere.position.y -= ray_pos.y;
 	sphere.position.z -= ray_pos.z;

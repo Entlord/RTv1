@@ -13,6 +13,8 @@
 # include <vector.h>
 # include <math.h>
 # include <screen.h>
+# include <render.h>
+# include <assert.h>
 
 # define	NO_PARAM		"Error input: 0 param"
 
@@ -29,7 +31,7 @@ void				render_map(t_map *map, t_img *image);
 t_object			*fill_collision_box(t_object *object);
 t_coor				get_camera_vector(const t_cam *camera, int x, int y);
 // t_object			*is_collide(t_coor vector, t_object *object);
-float	get_intersect_sphere(t_coor ray_pos, t_vector ray, t_ball sphere);
+float				get_intersect_sphere(t_coor ray_pos, t_vector ray, void *obj);
 
 // Utils
 
