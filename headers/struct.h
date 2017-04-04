@@ -1,11 +1,8 @@
 #ifndef __STRUCT_H__
 # define __STRUCT_H__
 
-# define	PLAN			1
-# define	TUBE			2
-# define	BALL			3
-# define	CONE 			4
 # define	BUFFER_SIZE		4096
+# define	t_vector	t_coor
 
 typedef struct		s_coor
 {
@@ -14,17 +11,11 @@ typedef struct		s_coor
 	float			z;
 }					t_coor;
 
-typedef struct		s_vector
-{
-	struct s_coor	position;
-	struct s_coor	direction;
-}					t_vector;
-
 typedef struct		s_color
 {
-	char			red;
-	char			green;
-	char			blue;
+	char			r;
+	char			g;
+	char			b;
 }					t_color;
 
 /*
@@ -35,7 +26,8 @@ typedef struct		s_color
 
 typedef struct	s_ball
 {
-	t_vector	point;
+	t_coor		position;
+	t_coor		direction;
 	t_color		color;
 	int			radius;
 	char		shiny;
@@ -45,7 +37,8 @@ typedef struct	s_ball
 
 typedef struct	s_tube
 {
-	t_vector	point;
+	t_coor		position;
+	t_coor		direction;
 	t_color		color;
 	int			radius;
 	int			height;
@@ -56,7 +49,8 @@ typedef struct	s_tube
 
 typedef struct	s_cone
 {
-	t_vector	point;
+	t_coor		position;
+	t_coor		direction;
 	t_color		color;
 	int			radius;
 	int			height;
@@ -67,7 +61,8 @@ typedef struct	s_cone
 
 typedef struct	s_plan
 {
-	t_vector	point;
+	t_coor		position;
+	t_coor		direction;
 	t_color		color;
 	int			width;
 	int			height;
@@ -78,7 +73,8 @@ typedef struct	s_plan
 
 typedef	struct	s_box
 {
-	t_vector	point;
+	t_coor		position;
+	t_coor		direction;
 	t_color		color;
 	int			width;
 	int			height;
@@ -94,7 +90,8 @@ typedef	struct	s_box
 
 typedef struct	s_cam
 {
-	t_vector	point;
+	t_coor		position;
+	t_coor		direction;
 	int			fov;
 	int			height;
 	int			width;
@@ -102,7 +99,8 @@ typedef struct	s_cam
 
 typedef struct	s_light
 {
-	t_vector	point;
+	t_coor		position;
+	t_coor		direction;
 	t_color		color;
 	int			radius;
 }				t_light;
@@ -114,6 +112,7 @@ typedef struct	s_light
 
 typedef struct		s_object
 {
+	int				id;
 	int				type;
 	void			*object;
 	t_box			collide_box;

@@ -1,77 +1,42 @@
 #include <libft.h>
-#include <struct.h>
 #include <rt.h>
 
-
-/*
-	Gestion input
-		fichier valide?
-	Lexeur 
-	parseur
-	Appel partie matthieu
-*/
-
-/*
-	init_window(200, 200);
-	clear_image();
-	copy_image_to_window();
-	SDL_Delay(500);
-	clear_image();
-	SDL_Delay(500);
-	free_resources();
-*/
-
-static void		st_save_map(int fd, t_list_rt **list_map)
+int main(void)
 {
-	t_list_rt	*map;
+	t_map	map;
+	t_cam cam;
+	t_img	img;
 
-	(void)list_map;
+	cam.direction.x = 0;
+	cam.direction.y = 1;
+	cam.direction.z = 0;
+	cam.position.x = 0;
+	cam.position.y = 0;
+	cam.position.z = 0;
+	cam.height = 100;
+	cam.width = 100;
+	cam.fov = 60;
 
-	map = file_check(fd);
-	if (close(fd) == -1)
-		perror(strerror(errno));
-	if (map)
+	img.height = 100;
+	img.width = 100;
+	img.pixel = malloc(sizeof(t_color*) * 100);
+
+	int	x = 0;
+
+	while (x < img.width)
 	{
-		//ft_push_map(file_check(fd));
+		img.pixel[x] = ft_memalloc(sizeof(t_color) * 100);
+		x++;
 	}
-}
 
-static void		st_check_list_param(int argc, char **argv, 
-									t_list_rt **list_map)//, t_list_rt **img)
-{
-		int		i;
-		int		fd;
-
-		i = 0;
-		while (i < argc)
-		{
-			++i;
-			fd = open(argv[i], O_RDONLY);
-			if (fd == -1)
-				perror(strerror(errno));
-			else
-			{
-				st_save_map(fd, list_map);
-				//calcul image
-			}
-		}
-}
-
-int				main(int argc, char **argv)
-{
-	t_list_rt	*list_map;
-//	t_list_rt	*list_img;
+	map.cam = &cam;
 
 
-	if (argc == 1)
-		ft_putstr(NO_PARAM);
-	else
-	{
-		list_map = NULL;
-//		list_img = NULL;
-		st_check_list_param(argc, argv, &list_map);
-		//free map;
-		//free img;
-	}
+	vector_normalize(&cam.direction);
+
+	init_window(400, 400);
+	render_map(&map, &img);
+	while (1)
+		handle_events();
 	return (0);
 }

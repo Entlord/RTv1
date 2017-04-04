@@ -1,4 +1,4 @@
-#include "screen.h"
+#include <rt.h>
 
 static t_sdl_data	g_sdl_data = {
 	NULL,
@@ -60,7 +60,7 @@ int					draw_pixel(int x, int y, t_color *color)
 	if (g_sdl_data.renderer == NULL)
 		return (0);
 	fail = SDL_SetRenderDrawColor(g_sdl_data.renderer,
-	color->red, color->green, color->blue, 255)
+	color->r, color->g, color->b, 255)
 	|| SDL_RenderDrawPoint(g_sdl_data.renderer, x, y);
 	return (fail != 0);
 }
