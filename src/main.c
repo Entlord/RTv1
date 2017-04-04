@@ -34,9 +34,11 @@ int main(void)
 
 	vector_normalize(&cam.direction);
 
-	init_window(400, 400);
-	render_map(&map, &img);
+	init_window(600, 400);
 	while (1)
+	{
+		render_map(&map, &img);
 		handle_events();
+	}
 	return (0);
 }

@@ -25,7 +25,8 @@ int    				init_window(int width, int height)
 
 	fail = SDL_Init(SDL_INIT_VIDEO) || SDL_CreateWindowAndRenderer(
 	width, height,
-	SDL_WINDOW_SHOWN, &g_sdl_data.window, &g_sdl_data.renderer);
+	SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE,
+	&g_sdl_data.window, &g_sdl_data.renderer);
 	g_sdl_data.width = width;
 	g_sdl_data.height = height;
 	return (fail != 0);
@@ -81,6 +82,7 @@ int					draw_img(t_img *img)
 	double	scale_x;
 	double	scale_y;
 
+	SDL_GL_GetDrawableSize(g_sdl_data.window, &g_sdl_data.width, &g_sdl_data.height);
 	scale_x = (double)img->width / (double)g_sdl_data.width;
 	scale_y = (double)img->height / (double)g_sdl_data.height;
 	y = 0;
@@ -89,8 +91,7 @@ int					draw_img(t_img *img)
 		x = 0;
 		while (x < g_sdl_data.width)
 		{
-			if (!draw_pixel(x, y, &img->pixel[(int)(x*scale_x)][(int)(y*scale_y)]))
-				return (0);
+			draw_pixel(x, y, &img->pixel[(int)(x*scale_x)][(int)(y*scale_y)]);
 			x++;
 		}
 		y++;

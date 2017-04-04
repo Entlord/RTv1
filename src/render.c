@@ -20,15 +20,17 @@ void	render_pixel(t_map *map, t_img *image, int x, int y)
 	sphere.color = get_color(255, 0, 0);
 
 	cam_vector = get_camera_vector(map->cam, x, y);
-	
+
 	intersect = get_intersect_sphere(map->cam->position, cam_vector, sphere);
 	// printf("%f\n", intersect);
 
 	cpy_pixel(&sky, &(image->pixel[x][y]));
 	if (intersect == -1)
-		draw_pixel(x, y, &sky);
+		// draw_pixel(x, y, &sky);
+		image->pixel[x][y] = sky;
 	else
-		draw_pixel(x, y, &sphere.color);
+		// draw_pixel(x, y, &sphere.color);
+		image->pixel[x][y].r = 255;
 }
 
 void	render_map(t_map *map, t_img *image)
@@ -37,18 +39,17 @@ void	render_map(t_map *map, t_img *image)
 	int			y;
 
 	fill_collision_box(map->object);
-	x = 0;
 	y = 0;
 	while (y < image->height)
 	{
+		x = 0;
 		while (x < image->width)
 		{
 			render_pixel(map, image, x, y);
 			x++;
 		}
-		x = 0;
 		y++;
 	}
-	// draw_img(image);
+	draw_img(image);
 	refresh_window();
 }
