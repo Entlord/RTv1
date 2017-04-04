@@ -78,18 +78,18 @@ int					draw_img(t_img *img)
 {
 	int		x;
 	int		y;
-	int		scale_x;
-	int		scale_y;
+	double	scale_x;
+	double	scale_y;
 
-	scale_x = img->width / g_sdl_data.width;
-	scale_y = img->height / g_sdl_data.height;
+	scale_x = (double)img->width / (double)g_sdl_data.width;
+	scale_y = (double)img->height / (double)g_sdl_data.height;
 	y = 0;
 	while (y < g_sdl_data.height)
 	{
 		x = 0;
 		while (x < g_sdl_data.width)
 		{
-			if (!draw_pixel(x, y, &img->pixel[x*scale_x][y*scale_y]))
+			if (!draw_pixel(x, y, &img->pixel[(int)(x*scale_x)][(int)(y*scale_y)]))
 				return (0);
 			x++;
 		}
