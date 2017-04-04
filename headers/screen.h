@@ -19,7 +19,7 @@ int					clear_image(void);
 int					draw_pixel(int x, int y, t_color *color);
 int					draw_img(t_img *img);
 int					refresh_window(void);
-int					set_color(int r, int g, int b);
 void				handle_events(void);
+t_sdl_data			*get_sdl_data(void);
 
 #endif
