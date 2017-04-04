@@ -11,6 +11,7 @@ typedef struct		s_sdl_data
 	SDL_Renderer	*renderer;
 	int				width;
 	int				height;
+	int				aa;
 }					t_sdl_data;
 
 int					init_window(int width, int height);

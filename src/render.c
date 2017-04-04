@@ -60,7 +60,7 @@ void	render_pixel(t_map *map, t_img *image, int x, int y)
 		// draw_pixel(x, y, &n->color);
 		cpy_pixel(&n->color, &image->pixel[x][y]);
 	}
-	
+
 	// intersect = get_intersect_sphere(map->cam->position, cam_vector, (t_ball*)(map->object->next->object));
 	// // printf("%f\n", intersect);
 
@@ -89,6 +89,4 @@ void	render_map(t_map *map, t_img *image)
 		}
 		y++;
 	}
-	draw_img(image);
-	refresh_window();
 }

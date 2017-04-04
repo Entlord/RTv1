@@ -19,7 +19,7 @@ void	new_sphere(t_object *root, int id, t_coor pos, t_color color, int radius)
 
 	while (root->next != NULL)
 		root = root->next;
-	
+
 	root->next = node;
 }
 
@@ -45,19 +45,19 @@ int main(void)
 	cam.position.x = 0;
 	cam.position.y = -3;
 	cam.position.z = 0;
-	cam.height = 400;
-	cam.width = 400;
+	cam.height = 100;
+	cam.width = 100;
 	cam.fov = 60;
 
-	img.height = 400;
-	img.width = 400;
-	img.pixel = malloc(sizeof(t_color*) * 400);
+	img.height = 100;
+	img.width = 100;
+	img.pixel = malloc(sizeof(t_color*) * 100);
 
 	int	x = 0;
 
 	while (x < img.width)
 	{
-		img.pixel[x] = ft_memalloc(sizeof(t_color) * 400);
+		img.pixel[x] = ft_memalloc(sizeof(t_color) * 100);
 		x++;
 	}
 
@@ -74,9 +74,13 @@ int main(void)
 
 	vector_normalize(&cam.direction);
 
-	init_window(800, 800);
+	init_window(400, 400);
 	render_map(&map, &img);
 	while (1)
+	{
+		draw_img(&img);
+		refresh_window();
 		handle_events();
+	}
 	return (0);
 }
