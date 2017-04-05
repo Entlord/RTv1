@@ -3,41 +3,39 @@
 #define SKYBOX_G	99
 #define SKYBOX_B	99
 
-const t_dict_obj dict[] =
+static const t_dict_obj dict[] =
 {
 	{SPHERE, get_intersect_sphere},
     { 0x0, NULL }
 };
 
-void	render_pixel(t_map *map, t_img *image, int x, int y)
+static t_ptr_intersect get_intersect_function(int type)
 {
-	t_color		sky;
+	int	i;
+
+	i = 0;
+	while (dict[i].type != 0x0 && dict[i].type != type)
+		i++;
+	if (dict[i].type == 0x0)
+		return (NULL);
+	else
+		return (dict[i].f);
+}
+
+static t_object	*intersect_object(t_map *map, t_vector ray)
+{
 	t_object	*obj;
 	t_object	*nearest;
 	float		intersect_tmp;
 	float		intersect_min;
-	int			i;
-
-	nearest = NULL;
-	sky = get_color(SKYBOX_R, SKYBOX_G, SKYBOX_B);
-	t_vector	cam_vector;
-
-	cam_vector = get_camera_vector(map->cam, x, y);
-	(void)sky;
-	(void)image;
 
 	intersect_min = -1;
 	obj = map->object;
-	while(obj)
+	while (obj)
 	{
-		i = 0;
-		while (dict[i].type != 0 && dict[i].type != obj->type)
-			i++;
-
-		if (dict[i].type != 0)
+		if (get_intersect_function(obj->type))
 		{
-
-			intersect_tmp = dict[i].f(map->cam->position, cam_vector, obj->object);
+			intersect_tmp = get_intersect_function(obj->type)(map->cam->position, ray, obj->object);
 			if (intersect_tmp == -1)
 				intersect_tmp = intersect_tmp;
 			else if (intersect_min == -1 || intersect_tmp < intersect_min)
@@ -46,29 +44,26 @@ void	render_pixel(t_map *map, t_img *image, int x, int y)
 				nearest = obj;
 			}
 		}
-
 		obj = obj->next;
 	}
+	return (intersect_min != -1 ? nearest : NULL);
+}
 
+void	render_pixel(t_map *map, t_img *image, int x, int y)
+{
+	t_color		sky;
+	t_object	*nearest;
+	t_vector	cam_vector;
+
+	sky = get_color(SKYBOX_R, SKYBOX_G, SKYBOX_B);
+	cam_vector = get_camera_vector(map->cam, x, y);
+	nearest = intersect_object(map, cam_vector);
 	if (nearest == NULL)
-		// draw_pixel(x, y, &sky);
 		cpy_pixel(&sky, &image->pixel[x][y]);
 	else
 	{
-		t_ball *n;
-		n = nearest->object;
-		// draw_pixel(x, y, &n->color);
-		cpy_pixel(&n->color, &image->pixel[x][y]);
+		cpy_pixel(&((t_ball*)nearest->object)->color, &image->pixel[x][y]);
 	}
-
-	// intersect = get_intersect_sphere(map->cam->position, cam_vector, (t_ball*)(map->object->next->object));
-	// // printf("%f\n", intersect);
-
-	// cpy_pixel(&sky, &(image->pixel[x][y]));
-	// if (intersect == -1)
-	// 	draw_pixel(x, y, &sky);
-	// else
-	// 	draw_pixel(x, y, &sphere.color);
 }
 
 void	render_map(t_map *map, t_img *image)
