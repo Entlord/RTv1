@@ -7,7 +7,7 @@ t_sdl_data			*get_sdl_data(void)
 		NULL,
 		0,
 		0,
-		1
+		0
 	};
 
 	return (&sdl_data);

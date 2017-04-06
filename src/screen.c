@@ -12,34 +12,39 @@ int					draw_pixel(int x, int y, t_color *color)
 	return (fail != 0);
 }
 
+double				scalex(t_img *img)
+{
+	return (double)img->width / (double)get_sdl_data()->width;
+}
+
+double				scaley(t_img *img)
+{
+	return (double)img->height / (double)get_sdl_data()->height;
+}
+
 t_color				get_average_pixel(t_img *img, int x, int y)
 {
 	t_color	average;
-	double	scale_x;
-	double	scale_y;
-
-	scale_x = (double)img->width / (double)get_sdl_data()->width;
-	scale_y = (double)img->height / (double)get_sdl_data()->height;
-	average.r = (img->pixel[(int)(x*scale_x)][(int)(y*scale_y)].r / 2.0
-	+ img->pixel[(int)((x+1.0)*scale_x)][(int)((y+1.0)*scale_y)].r / 2.0);
-	average.g = (img->pixel[(int)(x*scale_x)][(int)(y*scale_y)].g / 2.0
-	+ img->pixel[(int)((x+1.0)*scale_x)][(int)((y+1.0)*scale_y)].g / 2.0);
-	average.b = (img->pixel[(int)(x*scale_x)][(int)(y*scale_y)].b / 2.0
-	+ img->pixel[(int)((x+1.0)*scale_x)][(int)((y+1.0)*scale_y)].b / 2.0);
+	
+	average.r = img->pixel[(int)(x*scalex(img))][(int)(y*scaley(img))].r
+	/ 2.0 + (img->pixel[(int)((x+1.0/scalex(img))*scalex(img))][(int)((y+1.0
+	/scaley(img))*scaley(img))].r) / 2.0;
+	average.g = img->pixel[(int)(x*scalex(img))][(int)(y*scaley(img))].g
+	/ 2.0 + (img->pixel[(int)((x+1.0/scalex(img))*scalex(img))][(int)((y+1.0
+	/scaley(img))*scaley(img))].g) / 2.0;
+	average.b = img->pixel[(int)(x*scalex(img))][(int)(y*scaley(img))].b
+	/ 2.0 + (img->pixel[(int)((x+1.0/scalex(img))*scalex(img))][(int)((y+1.0
+	/scaley(img))*scaley(img))].b) / 2.0;
 	return (average);
 }
 
 t_color				get_pixel(t_img *img, int x, int y)
 {
 	t_color	average;
-	double	scale_x;
-	double	scale_y;
 
-	scale_x = (double)img->width / (double)get_sdl_data()->width;
-	scale_y = (double)img->height / (double)get_sdl_data()->height;
-	average.r = (img->pixel[(int)(x*scale_x)][(int)(y*scale_y)].r);
-	average.g = (img->pixel[(int)(x*scale_x)][(int)(y*scale_y)].g);
-	average.b = (img->pixel[(int)(x*scale_x)][(int)(y*scale_y)].b);
+	average.r = (img->pixel[(int)(x*scalex(img))][(int)(y*scaley(img))].r);
+	average.g = (img->pixel[(int)(x*scalex(img))][(int)(y*scaley(img))].g);
+	average.b = (img->pixel[(int)(x*scalex(img))][(int)(y*scaley(img))].b);
 	return (average);
 }
 
@@ -53,10 +58,10 @@ int					draw_img(t_img *img)
 	&get_sdl_data()->width,
 	&get_sdl_data()->height);
 	y = 0;
-	while (y + 1 < get_sdl_data()->height)
+	while (y + 1 / scaley(img) < get_sdl_data()->height)
 	{
 		x = 0;
-		while (x + 1 < get_sdl_data()->width)
+		while (x + 1 / scalex(img) < get_sdl_data()->width)
 		{
 			average = get_sdl_data()->aa ?
 			get_average_pixel(img, x, y) : get_pixel(img, x, y);
